@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using pckgInstaller;
 
 namespace pckgInstallerTests
 {
@@ -22,7 +23,7 @@ namespace pckgInstallerTests
                 "I: "
             };
 
-            var result = "";//resolve
+            var result = new InstallationDependencyResolver().Resolver(packageInputLines);
             Assert.That(result, Is.EqualTo("I, C, L"));
         }
 
@@ -31,8 +32,7 @@ namespace pckgInstallerTests
         public void NoDependencies(string packageInputLine, string expected)
         {
             var packageInputLines = new[] { packageInputLine };
-
-            var result = ""; //resolve
+            var result = new InstallationDependencyResolver().Resolver(packageInputLines);
             Assert.That(result, Is.EqualTo(expected));
         }
 
@@ -42,7 +42,8 @@ namespace pckgInstallerTests
         {
             var packageInputLines = new[] { "K: ", "C: " };
 
-            var result = "";//resolve
+
+            var result = new InstallationDependencyResolver().Resolver(packageInputLines);
             Assert.That(result, Is.EqualTo("K, C"));
         }
 
@@ -51,7 +52,7 @@ namespace pckgInstallerTests
         {
             var packageInputLines = new[] { "K: C", "C: " };
 
-            var result = "";//resolve
+            var result = new InstallationDependencyResolver().Resolver(packageInputLines);
             Assert.That(result, Is.EqualTo("C, K"));
         }
 
@@ -70,7 +71,9 @@ namespace pckgInstallerTests
                 "Ice: Leetmeme"
             };
 
-         //assert
+            //assert
+            var installationDependencyResolver = new InstallationDependencyResolver();
+            Assert.Throws<Exception>(() => installationDependencyResolver.Resolver(packageInputLines));
         }
 
         [Test]
@@ -81,7 +84,9 @@ namespace pckgInstallerTests
                 "Leetmeme: Unknown"
             };
 
-            //Assert
+
+            var installationDependencyResolver = new InstallationDependencyResolver();
+            Assert.Throws<Exception>(() => installationDependencyResolver.Resolver(packageInputLines));
         }
 
         [Test]
@@ -97,9 +102,11 @@ namespace pckgInstallerTests
                 "Ice: "
             };
 
-            var result = "KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream";
+            
 
-            //assert
+            var installationDependencyResolver = new InstallationDependencyResolver();
+            var result = installationDependencyResolver.Resolver(packageInputLines);
+            Assert.That(result, Is.EqualTo("KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream"));
         }
 
         [Test]
@@ -115,15 +122,20 @@ namespace pckgInstallerTests
                 "F: "
             };
 
-            var result = "F, A, B, C, D, E";
+            
 
-            //assert
+            var installationDependencyResolver = new InstallationDependencyResolver();
+            var result = installationDependencyResolver.Resolver(packageInputLines);
+            Assert.That(result, Is.EqualTo("F, A, B, C, D, E"));
         }
 
         [Test]
         public void Case3()
         {
             var packageInputLines = new string[] { };
+            var installationDependencyResolver = new InstallationDependencyResolver();
+            var result = installationDependencyResolver.Resolver(packageInputLines);
+            Assert.That(result, Is.EqualTo(""));
 
         }
 
@@ -139,8 +151,9 @@ namespace pckgInstallerTests
                 "E: B",
                 "F: D"
             };
-            var result = "D, B, E, C, F, A";
-           //assert
+            var installationDependencyResolver = new InstallationDependencyResolver();
+            var result = installationDependencyResolver.Resolver(packageInputLines);
+            Assert.That(result, Is.EqualTo("D, B, E, C, F, A"));
         }
 
     }

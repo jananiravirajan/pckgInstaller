@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using pckgInstaller;
 
 namespace pckgInstallerTests
 {
@@ -13,7 +14,7 @@ namespace pckgInstallerTests
         [TestCase("K: ", "K")]
         public void GetPackageName(string packageInputLine, string expected)
         {
-            var result = "";
+            var result = new PackageInputLineExtractor().GetPackageName(packageInputLine);
             Assert.That(result, Is.EqualTo(expected));
         }
 
@@ -21,7 +22,7 @@ namespace pckgInstallerTests
         [TestCase("K: ", "")]
         public void GetPackageDependencyText(string packageInputLine, string expected)
         {
-            var result = "";
+            var result = new PackageInputLineExtractor().GetPackageName(packageInputLine);
             Assert.That(result, Is.EqualTo(expected));
         }
 

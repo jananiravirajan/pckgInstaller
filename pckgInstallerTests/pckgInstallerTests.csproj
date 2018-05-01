@@ -53,6 +53,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pckgInstaller\pckgInstaller.csproj">
+      <Project>{0EF82E03-7A6F-4622-98AA-D73069B89123}</Project>
+      <Name>pckgInstaller</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
